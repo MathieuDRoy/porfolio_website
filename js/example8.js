@@ -17,21 +17,26 @@ function init(v_output) {
     controls.autoRotate = true;
     controls.update();
     
-    var distanceforcam = 2*10;
+    var distanceforcam = 2*100;
 
-    const geometry = new THREE.SphereGeometry(1, 20, 20);
+    const geometry = new THREE.SphereGeometry(3, 20, 20);
 
     const material = new THREE.MeshBasicMaterial( { color: "#7A7AAF"} );
+    var particles = new Array();
     var threeD = new Array();
     threeD = cleanArray(v_output);
-    console.log(threeD);
-    
 
-    
+    for (let allParticles = 10; allParticles < threeD.length; allParticles += 5) {
+        particles[allParticles] = new Array();
+        particles[allParticles] = new THREE.Mesh( geometry, material );
+        scene.add(particles[allParticles]);
+        particles[allParticles].position.set(threeD[allParticles+2], threeD[allParticles+3], threeD[allParticles+4]);
+    }
+
     camera.position.z = distanceforcam;
     
     controls.enablePan = false;
-    controls.enableDamping = true;   
+    controls.enableDamping = true;
 
     animate();
 }
