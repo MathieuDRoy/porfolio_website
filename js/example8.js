@@ -23,9 +23,9 @@ function init(v_output) {
 
     const material = new THREE.MeshBasicMaterial( { color: "#7A7AAF"} );
     var threeD = new Array();
-
-    threeD = v_output.split(' ');
-    alert(threeD);
+    threeD = cleanArray(v_output);
+    console.log(threeD);
+    
 
     
     camera.position.z = distanceforcam;
@@ -46,6 +46,21 @@ function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+function cleanArray (v_output) {
+    var arrForCleanData = new Array();
+    arrFromFile = v_output.split(' ');
+    var nextDataPoint = 0;
+    var coordinateData;
+    for (let i = 0; i < arrFromFile.length; i++){
+        coordinateData = arrFromFile[i];
+        if (coordinateData != "") {
+            arrForCleanData[nextDataPoint] = coordinateData;
+            nextDataPoint++;
+        }
+    }
+    return arrForCleanData;
 }
 
 
