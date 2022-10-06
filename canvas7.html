@@ -24,6 +24,23 @@
       </a>
     </div>
 
+    <div>
+      <input type='file' accept='text/plain' onchange='openFile(event)'><br>
+      <script>
+        var openFile = function(event) {
+          var input = event.target;
+
+          var reader = new FileReader();
+          reader.onload = function(){
+            var text = reader.result;
+            init(reader.result.substring(0, 200));
+            console.log(reader.result.substring(0, 200));
+          };
+          reader.readAsText(input.files[0]);
+        };
+      </script>
+    </div>
+
     <div class="model1" id="model1">
       <script src="https://cdn.jsdelivr.net/npm/three@0.124/build/three.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/three@0.124/examples/js/controls/OrbitControls.js"></script>
