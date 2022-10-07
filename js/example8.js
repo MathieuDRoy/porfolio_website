@@ -1,6 +1,6 @@
 // for colour picking https://threejs.org/examples/#webgl_materials_car
 
-var scene, camera, renderer, cube, controls, sculpture;
+var scene, camera, renderer, controls;
 
 function init(v_output) {
 
@@ -11,31 +11,60 @@ function init(v_output) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor( 0xffffff ); // white background
     document.body.appendChild(renderer.domElement);
-    
+
     controls = new THREE.OrbitControls( camera, renderer.domElement );
-    controls.autoRotate = true;
+    //controls.autoRotate = true;
     controls.update();
     
     var distanceforcam = 2*100;
 
-    const geometry = new THREE.SphereGeometry(2.7, 20, 20);
-
-    const material1 = new THREE.MeshBasicMaterial( { color: "#FF0000"} );
-    const material2 = new THREE.MeshBasicMaterial( { color: "#0000FF"} );
-    const material3 = new THREE.MeshBasicMaterial( { color: "#00FF00"} );
-    const boxMaterial = new THREE.MeshBasicMaterial( { color: "#000000"} );
-    
     var threeD = new Array();
     threeD = cleanArray(v_output);
+    drawBox(threeD);
+    drawModel(threeD);
 
-    
+    camera.position.z = distanceforcam;
+
+    controls.enablePan = false;
+    controls.enableDamping = true;
+
+    animate();
+}
+
+function animate() {
+    controls.update();
+    renderer.render(scene, camera);
+    window.requestAnimationFrame(animate);
+}
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+function cleanArray (v_output) {
+    var arrForCleanData = new Array();
+    arrFromFile = v_output.split(' ');
+    var nextDataPoint = 0;
+    var coordinateData;
+    for (let i = 0; i < arrFromFile.length; i++){
+        coordinateData = arrFromFile[i];
+        if (coordinateData != "") {
+            arrForCleanData[nextDataPoint] = coordinateData;
+            nextDataPoint++;
+        }
+    }
+    return arrForCleanData;
+}
+
+function drawBox(cleanFileText) {
+    const boxMaterial = new THREE.MeshBasicMaterial( { color: "#000000"} );
     var modelDimentians = new Array();
 
     for (let allCoordinates = 0; allCoordinates < 9; allCoordinates++) {
-        modelDimentians[allCoordinates] = threeD[allCoordinates]/2;
+        modelDimentians[allCoordinates] = cleanFileText[allCoordinates]/2;
     }
-
-    console.log(modelDimentians[5]);
 
     const points1 = [];
     points1.push( new THREE.Vector3( -modelDimentians[0],  modelDimentians[4], -modelDimentians[8] ) );
@@ -72,7 +101,14 @@ function init(v_output) {
     const geometryForBox4 = new THREE.BufferGeometry().setFromPoints( points4 );
     const line4 = new THREE.Line( geometryForBox4, boxMaterial );
     scene.add( line4 );
+}
 
+function drawModel(threeD) {
+    const geometry = new THREE.SphereGeometry(2.7, 20, 20);
+
+    const material1 = new THREE.MeshBasicMaterial( { color: "#FF0000"} );
+    const material2 = new THREE.MeshBasicMaterial( { color: "#0000FF"} );
+    const material3 = new THREE.MeshBasicMaterial( { color: "#00FF00"} );
 
     var particles = new Array();
 
@@ -84,46 +120,10 @@ function init(v_output) {
             particles[allParticles] = new THREE.Mesh( geometry, material2 );
         } else {
             particles[allParticles] = new THREE.Mesh( geometry, material3 );
-        }
-        
+        }        
         scene.add(particles[allParticles]);
         particles[allParticles].position.set(threeD[allParticles+2]-51, threeD[allParticles+3]-51, threeD[allParticles+4]-51);
     }
-
-
-    camera.position.z = distanceforcam;
-    
-    controls.enablePan = false;
-    controls.enableDamping = true;
-
-    animate();
-}
-
-function animate() {
-    controls.update();
-    renderer.render(scene, camera);
-    window.requestAnimationFrame(animate);
-}
-
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-}
-
-function cleanArray (v_output) {
-    var arrForCleanData = new Array();
-    arrFromFile = v_output.split(' ');
-    var nextDataPoint = 0;
-    var coordinateData;
-    for (let i = 0; i < arrFromFile.length; i++){
-        coordinateData = arrFromFile[i];
-        if (coordinateData != "") {
-            arrForCleanData[nextDataPoint] = coordinateData;
-            nextDataPoint++;
-        }
-    }
-    return arrForCleanData;
 }
 
 
