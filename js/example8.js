@@ -4,6 +4,7 @@ var scene, camera, renderer, controls;
 var vDrawBox = false;
 var threeD = new Array();
 var perspective;
+var currentCamera; 
 
 function init(v_output) {
     scene = new THREE.Scene();    
@@ -25,6 +26,8 @@ function init(v_output) {
     controls.enablePan = false;
     controls.enableDamping = true;
 
+    currentCamera = camera;
+
     animate();
 }
 
@@ -32,17 +35,20 @@ function animate() {
 
     /*if (perspective == 1) {
         camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
-        controls = new THREE.OrbitControls( camera, renderer.domElement );
-        controls.update();
-        camera.position.z = threeD[0];
         console.log("no");
     } else if (perspective == 2) {
         camera = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth,  window.innerWidth / -2,  window.innerWidth / 2, 0.1, 1000);
-        controls = new THREE.OrbitControls( camera, renderer.domElement );
-        controls.update();
-        camera.position.z = threeD[0];
         console.log("yes");
-    }*/
+    }
+    
+    <label for="setCamera">Orthographic View</label>
+      <input type="checkbox" id="setCamera" name="setCamera">
+      <script>
+        var setTheCamera = document.getElementById("setCamera");
+        setTheCamera.oninput = function() {
+          setCameraView();
+        }
+      </script>*/
     controls.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(animate);
@@ -182,6 +188,25 @@ function setCameraView() {
         perspective = 2;
     }
 }
+
+function onViewChange(event) {
+    var cam = currentCamera;
+    cam.position.copy(camera.position);
+    cam.rotation.copy(camera.rotation);
+    cam.tX = controls.target.x;
+    cam.tY = controls.target.y;
+    cam.tZ = controls.target.z;
+
+
+
+    camera = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth,  window.innerWidth / -2,  window.innerWidth / 2, 0.1, 1000);
+    camera.position.copy(cam.position);
+    camera.rotation.copy(cam.rotation);
+
+    controls = new THREE.OrbitControls(camera,  renderer.domElement);
+    controls.target = new THREE.Vector3( cam.tX, cam.tY, cam.tZ );
+
+};
 
 
 window.addEventListener('resize', onWindowResize);

@@ -131,14 +131,7 @@
           drawModel();
         }
       </script>
-      <label for="setCamera">Orthographic View</label>
-      <input type="checkbox" id="setCamera" name="setCamera">
-      <script>
-        var setTheCamera = document.getElementById("setCamera");
-        setTheCamera.oninput = function() {
-          setCameraView();
-        }
-      </script>
+      <input type='button' value="Perspective/Orthographic" onclick='onViewChange(event)'> 
     </div>
     <div class="model1" id="model1">
       <script src="https://cdn.jsdelivr.net/npm/three@0.124/build/three.js"></script>
