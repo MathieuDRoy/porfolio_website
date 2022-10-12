@@ -5,6 +5,9 @@ var vDrawBox = false;
 var threeD = new Array();
 var perspective;
 var currentCamera; 
+var centerX;
+var centerY;
+var centerZ;
 
 function init(v_output) {
     scene = new THREE.Scene();    
@@ -13,6 +16,7 @@ function init(v_output) {
     renderer.setClearColor( 0xffffff ); // white background
     document.body.appendChild(renderer.domElement);
     camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
+    perspective = 1;
     controls = new THREE.OrbitControls( camera, renderer.domElement );
     //controls.autoRotate = true;
     controls.update();
@@ -21,7 +25,13 @@ function init(v_output) {
     drawBox();
     drawModel();
 
-    camera.position.z = threeD[0];
+    centerX = threeD[0]/2 + threeD[1]/2 + threeD[2]/2;
+    centerY = threeD[3]/2 + threeD[4]/2 + threeD[5]/2;
+    centerZ = threeD[6]/2 + threeD[7]/2 + threeD[8]/2;
+
+    camera.position.x = centerX;
+    camera.position.y = centerY;
+    camera.position.z = centerZ;
 
     controls.enablePan = false;
     controls.enableDamping = true;
@@ -32,24 +42,7 @@ function init(v_output) {
 }
 
 function animate() {
-
-    /*if (perspective == 1) {
-        camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
-        console.log("no");
-    } else if (perspective == 2) {
-        camera = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth,  window.innerWidth / -2,  window.innerWidth / 2, 0.1, 1000);
-        console.log("yes");
-    }
-    
-    <label for="setCamera">Orthographic View</label>
-      <input type="checkbox" id="setCamera" name="setCamera">
-      <script>
-        var setTheCamera = document.getElementById("setCamera");
-        setTheCamera.oninput = function() {
-          setCameraView();
-        }
-      </script>*/
-    controls.update();
+    //controls.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(animate);
 }
@@ -174,39 +167,111 @@ function drawModel() {
             particles[allParticles] = new THREE.Mesh( geometry, material10 );
         }
         scene.add(particles[allParticles]);
-        particles[allParticles].position.set(threeD[allParticles+2]-51, threeD[allParticles+3]-51, threeD[allParticles+4]-51);
+        particles[allParticles].position.set(threeD[allParticles+2]-(threeD[0]/2), threeD[allParticles+3]-(threeD[4]/2), threeD[allParticles+4]-(threeD[8]/2));
         
     }
 
     drawBox();
 }
 
-function setCameraView() {
-    if (document.getElementById("setCamera") == "on"){
-        perspective = 1;
-    } else {
-        perspective = 2;
-    }
-}
 
 function onViewChange(event) {
-    var cam = currentCamera;
-    cam.position.copy(camera.position);
-    cam.rotation.copy(camera.rotation);
-    cam.tX = controls.target.x;
-    cam.tY = controls.target.y;
-    cam.tZ = controls.target.z;
+    if (perspective == 1 ) {
+        var cam = camera;
+        cam.position.copy(camera.position);
+        cam.rotation.copy(camera.rotation);
+        cam.tX = controls.target.x;
+        cam.tY = controls.target.y;
+        cam.tZ = controls.target.z;
 
+        camera = new THREE.OrthographicCamera(-window.innerWidth/4, window.innerWidth/4,  window.innerWidth / -8,  window.innerWidth / 8, 0.1, 1000);
+        camera.position.copy(cam.position);
+        camera.position.z = threeD[0];
+        camera.rotation.copy(cam.rotation);
 
+        controls = new THREE.OrbitControls(camera,  renderer.domElement);
+        controls.target = new THREE.Vector3( cam.tX, cam.tY, cam.tZ );
+        perspective = 2;
+    } else if (perspective == 2) {
+        var cam = camera;
+        cam.position.copy(camera.position);
+        cam.rotation.copy(camera.rotation);
+        cam.tX = controls.target.x;
+        cam.tY = controls.target.y;
+        cam.tZ = controls.target.z;
 
-    camera = new THREE.OrthographicCamera(-window.innerWidth, window.innerWidth,  window.innerWidth / -2,  window.innerWidth / 2, 0.1, 1000);
-    camera.position.copy(cam.position);
-    camera.rotation.copy(cam.rotation);
+        camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.copy(cam.position);
+        camera.position.z = threeD[0];
+        camera.rotation.copy(cam.rotation);
 
-    controls = new THREE.OrbitControls(camera,  renderer.domElement);
-    controls.target = new THREE.Vector3( cam.tX, cam.tY, cam.tZ );
+        controls = new THREE.OrbitControls(camera,  renderer.domElement);
+        controls.target = new THREE.Vector3( cam.tX, cam.tY, cam.tZ );
+        perspective = 1;
+    }
+    
 
 };
+
+function setAzimuth() {
+        
+        var phi = document.getElementById("azimuth").value;
+        var angularPositionX;
+        var angularPositionY;
+        phi = phi / (180/Math.PI);
+        angularPositionX = threeD[0] * Math.sin(phi);
+        angularPositionY = threeD[0] * Math.cos(phi); 
+        
+        
+        camera.position.x = angularPositionX;
+        camera.position.y = angularPositionY;
+        camera.rotation.z = -phi;
+        //controls.target = new THREE.Vector3( 0, 0, 0 );
+}
+
+function setPolar() {
+        
+    var theta = document.getElementById("polar").value;
+    var angularPositionZ;
+    var angularPositionY;
+    theta = -theta / (180/Math.PI);
+    angularPositionZ = threeD[0] * Math.sin(theta);
+    angularPositionY = threeD[0] * Math.cos(theta); 
+    
+    
+    camera.position.x = -theta; 
+    camera.rotation.y = angularPositionY;
+    camera.position.z = angularPositionZ;
+    
+    //controls.target = new THREE.Vector3( 0, 0, 0 );
+}
+
+function setTwist() {
+        
+    // var alpha = document.getElementById("twist").value;
+    // var angularPositionY
+    // var angularPositionZ
+    // alpha = alpha / (180/Math.PI);
+    // angularPositionY = threeD[0] * Math.sin(alpha);
+    // angularPositionZ = threeD[0] * Math.cos(alpha); 
+    
+    
+    // camera.position.y = angularPositionY;
+    // camera.position.z = angularPositionZ;
+    // //camera.rotation.x = -alpha;
+    // controls.target = new THREE.Vector3( threeD[0], threeD[4], threeD[8] );
+
+        var alpha = document.getElementById("twist").value;
+        var angularPositionX;
+        var angularPositionY;     
+        alpha = -alpha / (180/Math.PI);
+        angularPositionX = threeD[0] * Math.sin(alpha);
+        angularPositionY = threeD[0] * Math.cos(alpha); 
+        
+        camera.position.x = angularPositionX;
+        camera.position.y = angularPositionY;        
+        camera.rotation.z = -alpha;
+}
 
 
 window.addEventListener('resize', onWindowResize);

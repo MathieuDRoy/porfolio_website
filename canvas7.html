@@ -56,6 +56,12 @@
           drawModel();
         }
       </script>
+      <label for="azimuth">Azimuth:</label>
+      <input type="number" id="azimuth" name="azimuth" min="-180" max ="180" value = "0" onchange='setAzimuth()'>
+      <label for="polar">Polar:</label>
+      <input type="number" id="polar" name="polar" min="-180" max ="180" value = "0" onchange='setPolar()'>
+      <label for="twist">Twist:</label>
+      <input type="number" id="twist" name="twist" min="-180" max ="180" value = "0" onchange='setTwist()'>
       <br/>
       <input type="color" id="zeroColour" name="zeroColour" value="#0000ff">
       <label for="zeroColour">0</label>
