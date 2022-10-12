@@ -1,19 +1,16 @@
 // for colour picking https://threejs.org/examples/#webgl_materials_car
 
 var scene, camera, renderer, controls;
-var vDrawBox = false;
+var vDrawBox;
 var threeD = new Array();
 var perspective;
-var currentCamera; 
-var centerX;
-var centerY;
-var centerZ;
 
 function init(v_output) {
     scene = new THREE.Scene();    
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor( 0xffffff ); // white background
+
     document.body.appendChild(renderer.domElement);
     camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
     perspective = 1;
@@ -21,28 +18,29 @@ function init(v_output) {
     //controls.autoRotate = true;
     controls.update();
 
+    vDrawBox = (document.getElementById("drawBox").value == "on") ? true : false;
     threeD = cleanArray(v_output);
     drawBox();
     drawModel();
 
-    centerX = threeD[0]/2 + threeD[1]/2 + threeD[2]/2;
-    centerY = threeD[3]/2 + threeD[4]/2 + threeD[5]/2;
-    centerZ = threeD[6]/2 + threeD[7]/2 + threeD[8]/2;
-
-    camera.position.x = centerX;
-    camera.position.y = centerY;
-    camera.position.z = centerZ;
+    camera.position.x = 0;
+    camera.position.y = 0;
+    document.getElementById("cameraDistance").value = threeD[8];
+    document.getElementById("cameraDistance2").value = threeD[8];
+    camera.position.z = threeD[8];
+    camera.rotation.x = 0;
+    camera.rotation.y = 0;
+    camera.rotation.z = 0;
 
     controls.enablePan = false;
     controls.enableDamping = true;
-
-    currentCamera = camera;
-
+    controls.update();
     animate();
 }
 
 function animate() {
     //controls.update();
+    console.log(camera.position.x)
     renderer.render(scene, camera);
     window.requestAnimationFrame(animate);
 }
@@ -113,11 +111,11 @@ function drawBox() {
         const line4 = new THREE.Line( geometryForBox4, boxMaterial );
         scene.add( line4 );
     }
-    
+    controls.update();
 }
 
 function drawModel() {
-
+    camera.position.z = document.getElementById("cameraDistance").value;
     while(scene.children.length > 0){ 
         for (let allChildren = 0; allChildren< scene.children.length; allChildren++ ){
             scene.remove(scene.children[allChildren]); 
@@ -166,16 +164,17 @@ function drawModel() {
         } else {
             particles[allParticles] = new THREE.Mesh( geometry, material10 );
         }
+
         scene.add(particles[allParticles]);
         particles[allParticles].position.set(threeD[allParticles+2]-(threeD[0]/2), threeD[allParticles+3]-(threeD[4]/2), threeD[allParticles+4]-(threeD[8]/2));
         
     }
-
+    controls.update();
     drawBox();
 }
 
 
-function onViewChange(event) {
+function onViewChange() {
     if (perspective == 1 ) {
         var cam = camera;
         cam.position.copy(camera.position);
@@ -214,64 +213,60 @@ function onViewChange(event) {
 };
 
 function setAzimuth() {
-        
-        var phi = document.getElementById("azimuth").value;
-        var angularPositionX;
-        var angularPositionY;
-        phi = phi / (180/Math.PI);
-        angularPositionX = threeD[0] * Math.sin(phi);
-        angularPositionY = threeD[0] * Math.cos(phi); 
-        
-        
-        camera.position.x = angularPositionX;
-        camera.position.y = angularPositionY;
-        camera.rotation.z = -phi;
-        //controls.target = new THREE.Vector3( 0, 0, 0 );
+    var cameraDistance = getXYDistance();
+    var angle = document.getElementById("azimuth").value;
+    var angularPositionX;
+    var angularPositionY;
+
+    phi = (angle) / (180/Math.PI);
+    angularPositionX = cameraDistance * Math.cos(phi);
+    angularPositionY = cameraDistance * Math.sin(phi); 
+    
+    camera.position.x = angularPositionX;
+    camera.position.y = angularPositionY;
+    camera.rotation.z = -phi;
 }
 
 function setPolar() {
-        
-    var theta = document.getElementById("polar").value;
+    var cameraDistance = getYZDistance();
+    var angle = document.getElementById("polar").value;
     var angularPositionZ;
     var angularPositionY;
-    theta = -theta / (180/Math.PI);
-    angularPositionZ = threeD[0] * Math.sin(theta);
-    angularPositionY = threeD[0] * Math.cos(theta); 
+
+    theta = (angle) / (180/Math.PI);
+    angularPositionZ = cameraDistance * Math.cos(theta);
+    angularPositionY = cameraDistance * Math.sin(theta);   
     
-    
-    camera.position.x = -theta; 
-    camera.rotation.y = angularPositionY;
+    camera.position.y = angularPositionY;
     camera.position.z = angularPositionZ;
-    
-    //controls.target = new THREE.Vector3( 0, 0, 0 );
+    camera.rotation.x = -theta;
 }
 
 function setTwist() {
-        
-    // var alpha = document.getElementById("twist").value;
-    // var angularPositionY
-    // var angularPositionZ
-    // alpha = alpha / (180/Math.PI);
-    // angularPositionY = threeD[0] * Math.sin(alpha);
-    // angularPositionZ = threeD[0] * Math.cos(alpha); 
-    
-    
-    // camera.position.y = angularPositionY;
-    // camera.position.z = angularPositionZ;
-    // //camera.rotation.x = -alpha;
-    // controls.target = new THREE.Vector3( threeD[0], threeD[4], threeD[8] );
+    var cameraDistance = getXYDistance();
+    var angle = document.getElementById("twist").value;
+    var angularPositionX;
+    var angularPositionY;
 
-        var alpha = document.getElementById("twist").value;
-        var angularPositionX;
-        var angularPositionY;     
-        alpha = -alpha / (180/Math.PI);
-        angularPositionX = threeD[0] * Math.sin(alpha);
-        angularPositionY = threeD[0] * Math.cos(alpha); 
-        
-        camera.position.x = angularPositionX;
-        camera.position.y = angularPositionY;        
-        camera.rotation.z = -alpha;
+    alpha = (angle) / (180/Math.PI);
+    angularPositionX = cameraDistance * Math.cos(alpha);
+    angularPositionY = cameraDistance * Math.sin(alpha); 
+    
+    camera.position.x = angularPositionX;
+    camera.position.y = angularPositionY;
+    camera.rotation.z = alpha;
 }
 
+function getXYDistance() {
+    var distance;
+    distance = Math.sqrt(camera.position.x**2 + camera.position.y**2);
+    return distance;
+}
+
+function getYZDistance() {
+    var distance;
+    distance = Math.sqrt(camera.position.y**2 + (camera.position.z)**2);
+    return distance;
+}
 
 window.addEventListener('resize', onWindowResize);

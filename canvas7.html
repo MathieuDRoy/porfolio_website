@@ -8,6 +8,75 @@
     <link rel="icon" type="image/x-icon" href="/unnamed.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+    * {box-sizing: border-box;}
+    
+    /* Button used to open the contact form - fixed at the bottom of the page */
+    .open-button {
+      background-color: #555;
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      opacity: 0.8;
+      position: fixed;
+      bottom: 23px;
+      right: 28px;
+      width: 280px;
+    }
+    
+    /* The popup form - hidden by default */
+    .form-popup {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      right: 15px;
+      z-index: 9;
+    }
+    
+    /* Add styles to the form container */
+    .form-container {
+      max-width: 400px;
+      padding: 10px;
+      background-color: white;
+    }
+    
+    /* Full-width input fields */
+    .form-container input[type=number], .form-container input[type=color] {
+      width: 33%;
+      border: none;
+      background: #f1f1f1;
+    }
+    
+    /* When the inputs get focus, do something */
+    .form-container input[type=number]:focus, .form-container input[type=color]:focus {
+      background-color: #ddd;
+      outline: none;
+    }
+    
+    /* Set a style for the submit/login button */
+    .form-container .btn {
+      background-color: #04AA6D;
+      color: white;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom:10px;
+      opacity: 0.8;
+    }
+    
+    /* Add a red background color to the cancel button */
+    .form-container .cancel {
+      background-color: red;
+    }
+    
+    /* Add some hover effects to buttons */
+    .form-container .btn:hover, .open-button:hover {
+      opacity: 1;
+    }
+    </style>
   </head>
   <body>
     <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
@@ -23,122 +92,6 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
-
-    <div>
-      <input type='file' accept='text/plain' onchange='openFile(event)'>
-      <script>
-        var openFile = function(event) {
-          var input = event.target;
-          var reader = new FileReader();
-          reader.onload = function(){
-            var text = reader.result;
-            init(reader.result.replace(/(\r\n\t|\n|\r|\t)/gm, ""));
-          };
-          reader.readAsText(input.files[0]);
-        };
-      </script>
-      <label for="slice">Slices (min of 2):</label>
-      <input type="number" id="slice" name="slice" min="2" value="2" onchange='drawModel()'>
-      <label for="stack">Stacks (min of 3):</label>
-      <input type="number" id="stack" name="stack" min="3" value="3" onchange='drawModel()'>
-      <label for="radius">Radius:</label>
-      <input type="range" id="radius" min="0.01" value="2.7" step="0.01">
-      <input type="number" id="radius2" min="0.01" value="2.7"  step="0.01">
-      <script>
-        var slider = document.getElementById("radius");
-        var numbers = document.getElementById("radius2");
-        slider.oninput = function() {
-          document.getElementById("radius2").value = this.value;
-          drawModel();
-        }
-        numbers.oninput = function() {
-          document.getElementById("radius").value = this.value;
-          drawModel();
-        }
-      </script>
-      <label for="azimuth">Azimuth:</label>
-      <input type="number" id="azimuth" name="azimuth" min="-180" max ="180" value = "0" onchange='setAzimuth()'>
-      <label for="polar">Polar:</label>
-      <input type="number" id="polar" name="polar" min="-180" max ="180" value = "0" onchange='setPolar()'>
-      <label for="twist">Twist:</label>
-      <input type="number" id="twist" name="twist" min="-180" max ="180" value = "0" onchange='setTwist()'>
-      <br/>
-      <input type="color" id="zeroColour" name="zeroColour" value="#0000ff">
-      <label for="zeroColour">0</label>
-      <input type="color" id="oneColour" name="oneColour" value="#ff0000">
-      <label for="oneColour">1</label>
-      <input type="color" id="twoColour" name="twoColour" value="#00ff00">
-      <label for="twoColour">2</label>
-      <input type="color" id="threeColour" name="threeColour" value="#000000">
-      <label for="threeColour">3</label>
-      <input type="color" id="fourColour" name="fourColour" value="#000000">
-      <label for="fourColour">4</label>
-      <input type="color" id="fiveColour" name="fiveColour" value="#000000">
-      <label for="fiveColour">5</label>
-      <input type="color" id="sixColour" name="sixColour" value="#000000">
-      <label for="sixColour">6</label>
-      <input type="color" id="sevenColour" name="sevenColour" value="#000000">
-      <label for="sevenColour">7</label>
-      <input type="color" id="eightColour" name="eightColour" value="#000000">
-      <label for="eightColour">8</label>
-      <input type="color" id="nineColour" name="nineColour" value="#000000">
-      <label for="nineColour">9</label>
-      <script>
-        var zeroC = document.getElementById("zeroColour");
-        var oneC = document.getElementById("oneColour");
-        var twoC = document.getElementById("twoColour");
-        var threeC = document.getElementById("threeColour");
-        var fourC = document.getElementById("fourColour");
-        var fiveC = document.getElementById("fiveColour");
-        var sixC = document.getElementById("sixColour");
-        var sevenC = document.getElementById("sevenColour");
-        var eigthC = document.getElementById("eightColour");
-        var nineC = document.getElementById("nineColour");
-        zeroC.oninput = function() {
-          drawModel();
-        }
-        oneC.oninput = function() {
-          drawModel();
-        }
-        oneC.oninput = function() {
-          drawModel();
-        }
-        twoC.oninput = function() {
-          drawModel();
-        }
-        threeC.oninput = function() {
-          drawModel();
-        }
-        fourC.oninput = function() {
-          drawModel();
-        }
-        fiveC.oninput = function() {
-          drawModel();
-        }
-        sixC.oninput = function() {
-          drawModel();
-        }
-        sevenC.oninput = function() {
-          drawModel();
-        }
-        eigthC.oninput = function() {
-          drawModel();
-        }
-        nineC.oninput = function() {
-          drawModel();
-        }
-      </script>
-      <label for="drawBox">Draw box</label>
-      <input type="checkbox" id="drawBox" name="drawBox">
-      <script>
-        var drawTheBox = document.getElementById("drawBox");
-        drawTheBox.oninput = function() {
-          vDrawBox = !vDrawBox;
-          drawModel();
-        }
-      </script>
-      <input type='button' value="Perspective/Orthographic" onclick='onViewChange(event)'> 
-    </div>
     <div class="model1" id="model1">
       <script src="https://cdn.jsdelivr.net/npm/three@0.124/build/three.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/three@0.124/examples/js/controls/OrbitControls.js"></script>
@@ -151,6 +104,225 @@
         <script type="text/javascript" src="js/example8.js"></script>
       </div>
     </div>
+    <button class="open-button" id="form-open-btn" onclick="openForm()">Open Form</button>
+    <div class="form-popup" id="myForm">
+      <form class="form-container">
+        <table>
+          <tr>
+            <td colspan="2">
+              <input type='file' accept='text/plain' onchange='openFile(event)'><br/>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label for="slice">Slices (min of 2):</label>
+              <input type="number" id="slice" name="slice" min="2" value="2" onchange='drawModel()'>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label for="slice">Stack (min of 3):</label>
+              <input type="number" id="stack" name="stack" min="2" value="3" onchange='drawModel()'>
+            </td>
+          </tr>
+          <tr></tr>
+            <td>
+              <label for="radius">Radius:</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="range" id="radius" min="0.01" value="2.7" step="0.01">
+            </td>
+            <td>
+              <input type="number" id="radius2" min="0.01" value="2.7"  step="0.01">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="azimuth">Azimuth:</label>
+            </td>
+            <td>
+              <input type="number" id="azimuth" name="azimuth" min="-180" max ="180" value = "0" onchange='setAzimuth()'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="polar">Polar:</label>
+            </td>
+            <td>
+              <input type="number" id="polar" name="polar" min="-180" max ="180" value = "0" onchange='setPolar()'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="twist">Twist:</label>
+            </td>
+            <td>
+              <input type="number" id="twist" name="twist" min="-180" max ="180" value = "0" onchange='setTwist()'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="color" id="zeroColour" name="zeroColour" value="#0000ff">
+              <label for="zeroColour">0</label>
+              <input type="color" id="oneColour" name="oneColour" value="#ff0000">
+              <label for="oneColour">1</label>
+            </td>
+            <td>
+              <input type="color" id="twoColour" name="twoColour" value="#00ff00">
+              <label for="twoColour">2</label>
+              <input type="color" id="threeColour" name="threeColour" value="#000000">
+              <label for="threeColour">3</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="color" id="fourColour" name="fourColour" value="#000000">
+              <label for="fourColour">4</label>
+              <input type="color" id="fiveColour" name="fiveColour" value="#000000">
+              <label for="fiveColour">5</label>
+            </td>
+            <td>
+              <input type="color" id="sixColour" name="sixColour" value="#000000">
+              <label for="sixColour">6</label>
+              <input type="color" id="sevenColour" name="sevenColour" value="#000000">
+              <label for="sevenColour">7</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="color" id="eightColour" name="eightColour" value="#000000">
+              <label for="eightColour">8</label>
+              <input type="color" id="nineColour" name="nineColour" value="#000000">
+              <label for="nineColour">9</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="drawBox">Draw box</label>
+              <input type="checkbox" id="drawBox" name="drawBox">
+            </td>           
+            <td>
+              <input type='button' value="Perspective/Orthographic" onclick='onViewChange()'> 
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="cameraDistance">Camera Distance</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="range" id="cameraDistance" min="0" max="500" value="50" step="0.1">
+            </td>
+            <td>
+              <input type="number" id="cameraDistance2" min="0" max="500" value="50"  step="0.1">
+            </td>
+          </tr>
+        </table>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+      </form>
+    </div>
+    <script>
+      var openFile = function(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+          var text = reader.result;
+          init(reader.result.replace(/(\r\n\t|\n|\r|\t)/gm, ""));
+        };
+        reader.readAsText(input.files[0]);
+      };
+    </script>
+    <script>
+      var slider = document.getElementById("radius");
+      var numbers = document.getElementById("radius2");
+      slider.oninput = function() {
+        document.getElementById("radius2").value = this.value;
+        drawModel();
+      }
+      numbers.oninput = function() {
+        document.getElementById("radius").value = this.value;
+        drawModel();
+      }
+    </script>
+    <script>
+      var drawTheBox = document.getElementById("drawBox");
+      drawTheBox.oninput = function() {
+        vDrawBox = !vDrawBox;
+        drawModel();
+      }
+    </script>
+    <script>
+      var zeroC = document.getElementById("zeroColour");
+      var oneC = document.getElementById("oneColour");
+      var twoC = document.getElementById("twoColour");
+      var threeC = document.getElementById("threeColour");
+      var fourC = document.getElementById("fourColour");
+      var fiveC = document.getElementById("fiveColour");
+      var sixC = document.getElementById("sixColour");
+      var sevenC = document.getElementById("sevenColour");
+      var eigthC = document.getElementById("eightColour");
+      var nineC = document.getElementById("nineColour");
+      zeroC.oninput = function() {
+        drawModel();
+      }
+      oneC.oninput = function() {
+        drawModel();
+      }
+      oneC.oninput = function() {
+        drawModel();
+      }
+      twoC.oninput = function() {
+        drawModel();
+      }
+      threeC.oninput = function() {
+        drawModel();
+      }
+      fourC.oninput = function() {
+        drawModel();
+      }
+      fiveC.oninput = function() {
+        drawModel();
+      }
+      sixC.oninput = function() {
+        drawModel();
+      }
+      sevenC.oninput = function() {
+        drawModel();
+      }
+      eigthC.oninput = function() {
+        drawModel();
+      }
+      nineC.oninput = function() {
+        drawModel();
+      }
+    </script>
+    <script>
+      var slider2 = document.getElementById("cameraDistance");
+      var numbers2 = document.getElementById("cameraDistance2");
+      slider2.oninput = function() {
+        document.getElementById("cameraDistance2").value = this.value;
+        drawModel();
+      }
+      numbers2.oninput = function() {
+        document.getElementById("cameraDistance").value = this.value;
+        drawModel();
+      }
+    </script>
+    <script>
+      function openForm() {
+        document.getElementById("myForm").style.display = "block";
+        document.getElementById("form-open-btn").style.display = "none";
+      }
+      
+      function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+        document.getElementById("form-open-btn").style.display = "block";
+      }
+      </script>
+    
   </body>
   
   <script> 
