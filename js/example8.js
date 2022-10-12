@@ -25,8 +25,8 @@ function init(v_output) {
 
     camera.position.x = 0;
     camera.position.y = 0;
-    document.getElementById("cameraDistance").value = threeD[8];
-    document.getElementById("cameraDistance2").value = threeD[8];
+    document.getElementById("cameraDistanceSlider").value = threeD[8];
+    document.getElementById("cameraDistanceNumber").value = threeD[8];
     camera.position.z = threeD[8];
     camera.rotation.x = 0;
     camera.rotation.y = 0;
@@ -115,7 +115,7 @@ function drawBox() {
 }
 
 function drawModel() {
-    camera.position.z = document.getElementById("cameraDistance").value;
+    camera.position.z = document.getElementById("cameraDistanceSlider").value;
     while(scene.children.length > 0){ 
         for (let allChildren = 0; allChildren< scene.children.length; allChildren++ ){
             scene.remove(scene.children[allChildren]); 
@@ -123,7 +123,7 @@ function drawModel() {
         
     }
 
-    const geometry = new THREE.SphereGeometry(document.getElementById("radius").value, document.getElementById("slice").value, document.getElementById("stack").value);
+    const geometry = new THREE.SphereGeometry(document.getElementById("radiusSlider").value, document.getElementById("slice").value, document.getElementById("stack").value);
 
     const material0 = new THREE.MeshBasicMaterial( { color: document.getElementById("zeroColour").value} );
     const material1 = new THREE.MeshBasicMaterial( { color: document.getElementById("oneColour").value} );

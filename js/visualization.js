@@ -9,14 +9,14 @@ var openFile = function(event) {
   reader.readAsText(input.files[0]);
 };
 
-var slider = document.getElementById("radius");
-var numbers = document.getElementById("radius2");
-slider.oninput = function() {
-  document.getElementById("radius2").value = this.value;
+//var slider = document.getElementById("radiusSlider");
+//var numbers = document.getElementById("radiusNumber");
+document.getElementById("radiusSlider").oninput = function() {
+  document.getElementById("radiusNumber").value = this.value;
   drawModel();
 }
-numbers.oninput = function() {
-  document.getElementById("radius").value = this.value;
+document.getElementById("radiusNumber").oninput = function() {
+  document.getElementById("radiusSlider").value = this.value;
   drawModel();
 }
 
@@ -70,14 +70,14 @@ nineC.oninput = function() {
   drawModel();
 }
 
-var slider2 = document.getElementById("cameraDistance");
-var numbers2 = document.getElementById("cameraDistance2");
+var slider2 = document.getElementById("cameraDistanceSlider");
+var numbers2 = document.getElementById("cameraDistanceNumber");
 slider2.oninput = function() {
-  document.getElementById("cameraDistance2").value = this.value;
+  document.getElementById("cameraDistanceNumber").value = this.value;
   drawModel();
 }
 numbers2.oninput = function() {
-  document.getElementById("cameraDistance").value = this.value;
+  document.getElementById("cameraDistanceSlider").value = this.value;
   drawModel();
 }
 
