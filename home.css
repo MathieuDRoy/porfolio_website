@@ -40,14 +40,6 @@ a {
     left: 10%;
     top: 20%;
 }
-.job {
-    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif; 
-    margin: 0;
-    color: #FEFEFE;
-    position: absolute;
-    left: 10%;
-    top: 80%;
-}
 
 [type="button"] {
     font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif; 
