@@ -19,7 +19,7 @@ jobs:
       - name: Build dependencies
         run: npm run build
       - name: Archive production artifact
-        uses: actions/upload-artifac@main
+        uses: actions/upload-artifac@master
         with:
           name: dist
           path: dist
@@ -31,12 +31,12 @@ jobs:
       - name: Checkout repository
         uses: action/checkout@master
       - name: Download artifact
-        uses: actions/download-artifac@main
+        uses: actions/download-artifac@master
         with:
           name: dist
           path: dist
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@main
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
