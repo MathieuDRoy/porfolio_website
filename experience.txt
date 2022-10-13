@@ -1,0 +1,94 @@
+<div class="experience" id="experience">
+  <h2><br/>Past Work Experience and Education<br/><br/></h2>
+  <table>
+    <tr>
+      <th>
+        <h4>
+          Teaching Assistant (TA) - COSC 2947, Object Oriented Programming C++, Laurentian University— Dr Ralph Meyer <br/><br/>
+        </h4>
+      </th>
+      <th>
+        <h4>
+          Applications Developer, SHYFTinc/BESTECH — Research and Development <br/><br/>
+        </h4>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <h6>
+          Correction of assignments and lab work for second year student submissions. <br/>
+          Attending lab sessions and helping students understand C++ fundamentals. <br/>
+          Answering questions and assisting students with issues in their code for assignments and projects. <br/><br/>
+        </h6>
+      </td>
+      <td>
+        <h6>
+          Software prototyping, developing, and testing mainly written in Python. <br/>
+          Working with Arduinos and Raspberry Pies and other electrical components. <br/>
+          3D designing and modeling in Inventor, printing with PLA, and evaluating results. <br/><br/>
+        </h6>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="logo_LU-work.png" class="responsiveA">
+      </td>
+      <td>
+        <img src="logo_shyft-work.png" class="responsiveA">
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2">
+        <h4>
+          <br/> Canada Revenue Agency, Sudbury — T1/T3 Specialty Services <br/><br/>
+        </h4>
+      </th>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h6>
+          Processing Return Mail and Direct Deposit workflows. <br/>
+          Keeping personal information secure and assisting taxpayers with various concerns. <br/>
+          Collaborate with other departments.<br/><br/>
+        </h6>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <img  src="logo_cra-work.png" class="responsiveB">
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <h4>
+          <br/> Laurentian University, Sudbury <br/> B.Cosc Computer Science <br/>
+        </h4>
+      </th>
+      <th>
+        <h4>
+          <br/> Collège Notre-Dame, Sudbury <br/> Diplôme d’études secondaires de l’Ontario <br/>
+        </h4>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <h6>
+          <br/> Graduating with a Bachelor of Computer Science with Honors, and a minor in Communication Studies. <br/>
+        </h6>
+      </td>
+      <td>
+        <h6>
+          <br/> Graduated with Honors and recipient of the Ontario Scholar Award. <br/>
+        </h6>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="logo_LU.png" class="responsiveB">
+      </td>
+      <td>
+        <img src="logo_CND.png" class="responsiveB" alt="high school logo">
+      </td>
+    </tr>
+  </table>
+</div>
