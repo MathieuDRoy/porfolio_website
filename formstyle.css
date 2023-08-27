@@ -33,7 +33,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   
   /* Full-width input fields */
   .form-container input[type=number],  .form-container input[type=color] {
-    width: 40%;
+    width: 37%;
     border: none;
     background: #f1f1f1;
   }
