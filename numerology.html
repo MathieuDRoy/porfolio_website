@@ -1,8 +1,26 @@
 <!DOCTYPE html>
+<head>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
 <html>
     <body>
+        <h1 id="todayTxt"></h1>
+        <h3 id="todayNum"></h3>
 
-        <p id="demo"></p>
+        <script>
+            const todayDate = new Date();
+            const todayDay = todayDate.getDay();
+            const todayMonth = todayDate.getMonth() + 1;
+            const todayYear = todayDate.getFullYear();
+            document.getElementById("todayTxt").innerHTML = "Today's date is: <br/>" + todayDay + "-" + todayMonth + "-" + todayYear;
+        </script>
 
         <script>
             const d = new Date();
@@ -10,7 +28,7 @@
             const month = d.getMonth() + 1;
             const year = d.getFullYear();
             
-            let testStr = lifePath(day, month, year);
+            let dayNum = lifePath(day, month, year);
 //            let lifePathNum = lifePath(day, month, year);
 //            let testStr = ""
 //            testStr = 
@@ -125,7 +143,7 @@
                 return dayMonthYearNum
             }
 
-            document.getElementById("demo").innerHTML = testStr; //  dayNum + "-" + monthNum + "-" + yearNum;
+            document.getElementById("todayNum").innerHTML = "Today is a<br/>" + dayNum + "<br/>day"; //  dayNum + "-" + monthNum + "-" + yearNum;
         </script>
 
     </body>
