@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <body>
+
+        <p id="demo"></p>
+
+        <script>
+            const d = new Date();
+            const day = d.getDay();
+            const month = d.getMonth() + 1;
+            const year = d.getFullYear();
+            
+            let testStr = lifePath(day, month, year);
+//            let lifePathNum = lifePath(day, month, year);
+//            let testStr = ""
+//            testStr = 
+//                      testStr 
+//                    + day + "=" + downAddDay(day) + "|" 
+//                    + month + "=" + downAddMonth(month) + "|" 
+//                    + year + "=" + downAddYear(year) + "<br/><br/>"
+//                    + day + "+" + month + "=" + downAddDayMonth(day, month) + "<br/>"
+//                    + downAddDayMonth(day, month) + "+" + year + "=" + downAddDayMonth(day, month) + "+" + downAddYear(year) + "=" + downAddDayMonthYear(downAddDayMonth(day, month), downAddYear(year)) + "<br/>"
+//                    + 
+//                    lifePathNum;
+//            let testStr = ""
+//            for (let i = 1900; i <= 2000; i++){
+//                for (let j = 1; j <= 12; j++) {
+//                    for (let k = 1; k <= 31; k++) {
+//                        let lifePathNum = lifePath(k, j, i);
+//                        if (lifePathNum > 9) {
+//                            if (lifePathNum != 11 && lifePathNum != 22 && lifePathNum != 33){
+//                                testStr = testStr 
+//                                        + k + "=" + downAddDay(k) + "| " 
+//                                        + j + "=" + downAddMonth(j) + "| " 
+//                                        + i + "=" + downAddYear(i) + "| " 
+//                                        +lifePathNum + "<br/>"
+//                            } 
+//                        }
+//                    }
+//                }
+//            }
+
+            function downAddDay(dayObj){
+                if(dayObj > 9){
+                    if (dayObj != 11 && dayObj != 22) {
+                        return parseInt(dayObj.toString()[0]) + parseInt(dayObj.toString()[1]);
+                    }
+                    return dayObj;
+                }
+                return dayObj;
+            }
+
+            function downAddMonth(monthObj){
+                if(monthObj > 9){
+                    if (monthObj != 11) {
+                        return parseInt(monthObj.toString()[0]) + parseInt(monthObj.toString()[1]);
+                    }
+                    return monthObj; 
+                }
+                return monthObj;
+            }
+
+            function downAddYear(yearObj) {
+                let yearSum = parseInt(yearObj.toString()[0]) + parseInt(yearObj.toString()[1]) + parseInt(yearObj.toString()[2]) + parseInt(yearObj.toString()[3]);
+                if (yearSum > 9) {
+                    if (yearSum != 11 && yearSum != 22 && yearSum != 33) {
+                        let yearSecSum = parseInt(yearSum.toString()[0]) + parseInt(yearSum.toString()[1]);
+                        if (yearSecSum > 9) {
+                            if (yearSecSum != 11 && yearSecSum != 22 && yearSecSum != 33) {
+                                let yearFinSum = parseInt(yearSecSum.toString()[0]) + parseInt(yearSecSum.toString()[1]);
+                                return yearFinSum;
+                            }
+                            return yearSecSum;
+                            
+                        }
+                        return yearSecSum;
+                                                
+                    }
+                    return yearSum;
+                      
+                }
+                return yearSum;
+                
+                
+            }
+
+            function downAddDayMonth(dayObj, monthObj){
+                let dayMonthSum = dayObj + monthObj;
+                if (dayMonthSum > 9) {
+                    if (dayMonthSum != 11 && dayMonthSum != 22 && dayMonthSum != 33) {
+                        let dayMonthSecSum = parseInt(dayMonthSum.toString()[0]) + parseInt(dayMonthSum.toString()[1]);
+                        return dayMonthSecSum
+                    }
+                    return dayMonthSum
+                }
+                return dayMonthSum
+            }
+
+            function downAddDayMonthYear(dayMonthObj, yearObj){
+                let dayMonthYearSum = dayMonthObj + yearObj;
+                if (dayMonthYearSum > 9){
+                    if (dayMonthYearSum != 11 && dayMonthYearSum != 22 && dayMonthYearSum != 33) {
+                        let dayMonthYearSecSum = parseInt(dayMonthYearSum.toString()[0]) + parseInt(dayMonthYearSum.toString()[1]);
+                        if (dayMonthYearSecSum > 9) {
+                            if (dayMonthYearSecSum != 11 && dayMonthYearSecSum != 22 && dayMonthYearSecSum != 33){
+                                let dayMonthYearFinSum = parseInt(dayMonthYearSecSum.toString()[0]) + parseInt(dayMonthYearSecSum.toString()[1]);
+                                return dayMonthYearFinSum
+                            }
+                        }
+                        return dayMonthYearSecSum
+                    }
+                    return dayMonthYearSum
+                }
+                return dayMonthYearSum
+            }
+
+            function lifePath(dayObj, monthOjb, yearObj) {
+                let dayNum = downAddDay(dayObj);
+                let monthNum = downAddMonth(monthOjb);
+                let yearNum = downAddYear(yearObj);
+
+                let dayMonthNum = downAddDayMonth(dayNum, monthNum)
+                let dayMonthYearNum = downAddDayMonthYear(dayMonthNum, yearNum)
+
+                return dayMonthYearNum
+            }
+
+            document.getElementById("demo").innerHTML = testStr; //  dayNum + "-" + monthNum + "-" + yearNum;
+        </script>
+
+    </body>
+</html>
