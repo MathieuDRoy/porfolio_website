@@ -1,0 +1,28 @@
+            let lifePathNum = lifePath(day, month, year);
+            let testStr = ""
+            testStr = 
+                      testStr 
+                    + day + "=" + downAddDay(day) + "|" 
+                    + month + "=" + downAddMonth(month) + "|" 
+                    + year + "=" + downAddYear(year) + "<br/><br/>"
+                    + day + "+" + month + "=" + downAddDayMonth(day, month) + "<br/>"
+                    + downAddDayMonth(day, month) + "+" + year + "=" + downAddDayMonth(day, month) + "+" + downAddYear(year) + "=" + downAddDayMonthYear(downAddDayMonth(day, month), downAddYear(year)) + "<br/>"
+                    + 
+                    lifePathNum;
+            let testStr = ""
+            for (let i = 1900; i <= 2000; i++){
+                for (let j = 1; j <= 12; j++) {
+                    for (let k = 1; k <= 31; k++) {
+                        let lifePathNum = lifePath(k, j, i);
+                        if (lifePathNum > 9) {
+                            if (lifePathNum != 11 && lifePathNum != 22 && lifePathNum != 33){
+                                testStr = testStr 
+                                        + k + "=" + downAddDay(k) + "| " 
+                                        + j + "=" + downAddMonth(j) + "| " 
+                                        + i + "=" + downAddYear(i) + "| " 
+                                        +lifePathNum + "<br/>"
+                            } 
+                        }
+                    }
+                }
+            }

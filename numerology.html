@@ -15,48 +15,20 @@
         <h3 id="todayNum"></h3>
 
         <script>
-            const todayDate = new Date();
-            const todayDay = todayDate.getDay();
-            const todayMonth = todayDate.getMonth() + 1;
-            const todayYear = todayDate.getFullYear();
+            let todayDate = new Date();
+            let todayDay = todayDate.getDate();
+            let todayMonth = todayDate.getMonth() + 1;
+            let todayYear = todayDate.getFullYear();
             document.getElementById("todayTxt").innerHTML = "Today's date is: <br/>" + todayDay + "-" + todayMonth + "-" + todayYear;
         </script>
 
         <script>
-            const d = new Date();
-            const day = d.getDay();
-            const month = d.getMonth() + 1;
-            const year = d.getFullYear();
+            let d = new Date();
+            let day = d.getDate();
+            let month = d.getMonth() + 1;
+            let year = d.getFullYear();
             
             let dayNum = lifePath(day, month, year);
-//            let lifePathNum = lifePath(day, month, year);
-//            let testStr = ""
-//            testStr = 
-//                      testStr 
-//                    + day + "=" + downAddDay(day) + "|" 
-//                    + month + "=" + downAddMonth(month) + "|" 
-//                    + year + "=" + downAddYear(year) + "<br/><br/>"
-//                    + day + "+" + month + "=" + downAddDayMonth(day, month) + "<br/>"
-//                    + downAddDayMonth(day, month) + "+" + year + "=" + downAddDayMonth(day, month) + "+" + downAddYear(year) + "=" + downAddDayMonthYear(downAddDayMonth(day, month), downAddYear(year)) + "<br/>"
-//                    + 
-//                    lifePathNum;
-//            let testStr = ""
-//            for (let i = 1900; i <= 2000; i++){
-//                for (let j = 1; j <= 12; j++) {
-//                    for (let k = 1; k <= 31; k++) {
-//                        let lifePathNum = lifePath(k, j, i);
-//                        if (lifePathNum > 9) {
-//                            if (lifePathNum != 11 && lifePathNum != 22 && lifePathNum != 33){
-//                                testStr = testStr 
-//                                        + k + "=" + downAddDay(k) + "| " 
-//                                        + j + "=" + downAddMonth(j) + "| " 
-//                                        + i + "=" + downAddYear(i) + "| " 
-//                                        +lifePathNum + "<br/>"
-//                            } 
-//                        }
-//                    }
-//                }
-//            }
 
             function downAddDay(dayObj){
                 if(dayObj > 9){
