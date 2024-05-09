@@ -3,6 +3,7 @@
     <style>
         h1 {
             text-align: center;
+            color: #036040;
         }
         h3 {
             text-align: center;
@@ -27,14 +28,21 @@
             let day = d.getDate();
             let month = d.getMonth() + 1;
             let year = d.getFullYear();
-            
+            let partialNum = 0;            
             let dayNum = lifePath(day, month, year);
+
+            if (partialNum != 0){
+                document.getElementById("todayNum").innerHTML = "Today is a " + dayNum + " day. Partial " + partialNum;
+            } else {
+                document.getElementById("todayNum").innerHTML = "Today is a " + dayNum + " day";
+            }
 
             function downAddDay(dayObj){
                 if(dayObj > 9){
                     if (dayObj != 11 && dayObj != 22) {
                         return parseInt(dayObj.toString()[0]) + parseInt(dayObj.toString()[1]);
                     }
+                    partialNum = dayObj;
                     return dayObj;
                 }
                 return dayObj;
@@ -45,6 +53,7 @@
                     if (monthObj != 11) {
                         return parseInt(monthObj.toString()[0]) + parseInt(monthObj.toString()[1]);
                     }
+                    partialNum = monthObj;
                     return monthObj; 
                 }
                 return monthObj;
@@ -60,12 +69,14 @@
                                 let yearFinSum = parseInt(yearSecSum.toString()[0]) + parseInt(yearSecSum.toString()[1]);
                                 return yearFinSum;
                             }
+                            partialNum = yearSecSum;
                             return yearSecSum;
                             
                         }
                         return yearSecSum;
                                                 
                     }
+                    partialNum = yearSum;
                     return yearSum;
                       
                 }
@@ -81,6 +92,8 @@
                         let dayMonthSecSum = parseInt(dayMonthSum.toString()[0]) + parseInt(dayMonthSum.toString()[1]);
                         return dayMonthSecSum
                     }
+                    partialNum = dayMonthSum;
+                    console.log(partialNum)
                     return dayMonthSum
                 }
                 return dayMonthSum
@@ -96,9 +109,12 @@
                                 let dayMonthYearFinSum = parseInt(dayMonthYearSecSum.toString()[0]) + parseInt(dayMonthYearSecSum.toString()[1]);
                                 return dayMonthYearFinSum
                             }
+                            partialNum = dayMonthYearSecSum;
+                            return dayMonthYearSecSum
                         }
                         return dayMonthYearSecSum
                     }
+                    partialNum = dayMonthYearSum;
                     return dayMonthYearSum
                 }
                 return dayMonthYearSum
@@ -114,8 +130,6 @@
 
                 return dayMonthYearNum
             }
-
-            document.getElementById("todayNum").innerHTML = "Today is a<br/>" + dayNum + "<br/>day"; //  dayNum + "-" + monthNum + "-" + yearNum;
         </script>
 
     </body>
