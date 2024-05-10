@@ -18,7 +18,7 @@ function init(v_output) {
     //controls.autoRotate = true;
     controls.update();
 
-    vDrawBox = (document.getElementById("drawBox").value == "on") ? true : false;
+    vDrawBox = (document.getElementById("drawBox").value != "on") ? true : false;
     threeD = cleanArray(v_output);
     drawBox();
     drawModel();
@@ -40,7 +40,7 @@ function init(v_output) {
 
 function animate() {
     //controls.update();
-    console.log(camera.position.x)
+    //console.log(camera.position.x)
     renderer.render(scene, camera);
     window.requestAnimationFrame(animate);
 }
@@ -169,6 +169,11 @@ function drawModel() {
         particles[allParticles].position.set(threeD[allParticles+2]-(threeD[0]/2), threeD[allParticles+3]-(threeD[4]/2), threeD[allParticles+4]-(threeD[8]/2));
         
     }
+
+    setAzimuth();
+    setPolar();
+    setTwist();
+
     controls.update();
     drawBox();
 }
