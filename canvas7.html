@@ -32,6 +32,9 @@
       
       <scritp src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/jsm/loaders/STLLoader.js"></scritp>
       <script src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/loaders/STLLoader.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/lil-gui@0.19/+esm></script>
+
       <div>
         <script type="text/javascript" src="js/example8.js"></script>
       </div>
@@ -44,32 +47,32 @@
         <table>
           <tr>
             <td colspan="2">
-              <input type='file' accept='text/plain' onchange='openFile(event)'><br/>
+              <input type='file' accept='text/plain' onchange='openFile(event)'>
             </td>
           </tr>
           <tr>
-            <td colspan="2">
+            <td>
               <label for="slice">Slices (min of 2):</label>
+            </td>
+            <td>
               <input type="number" id="slice" name="slice" min="2" value="2" onchange='drawModel()'>
             </td>
           </tr>
           <tr>
-            <td colspan="2">
-              <label for="slice">Stack (min of 3):</label>
-              <input type="number" id="stack" name="stack" min="2" value="3" onchange='drawModel()'>
-            </td>
-          </tr>
-          <tr></tr>
             <td>
-              <label for="radiusSlider">Radius:</label>
+              <label for="slice">Stack (min of 3):</label>
+            </td>
+            <td>
+              <input type="number" id="stack" name="stack" min="2" value="3" onchange='drawModel()'>
             </td>
           </tr>
           <tr>
             <td>
-              <input type="range" id="radiusSlider" min="0.01" value="2.7" step="0.01">
+              <label for="radiusSlider">Radius:</label>
             </td>
             <td>
               <input type="number" id="radiusNumber" min="0.01" value="2.7"  step="0.01">
+              <input type="range" id="radiusSlider" min="0.01" value="2.7" step="0.01">
             </td>
           </tr>
           <tr>
@@ -95,6 +98,23 @@
             <td>
               <input type="number" id="twist" name="twist" min="-180" max ="180" value = "0" onchange='setTwist()'>
             </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="cameraDistance">Camera Distance</label>
+            </td>
+            <td>
+              <input type="number" id="cameraDistanceNumber" min="0" max="500" value="50"  step="0.1">
+              <input type="range" id="cameraDistanceSlider" min="0" max="500" value="50" step="0.1">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="drawBox">Draw box</label>
+            </td>
+            <td>
+              <input type="checkbox" id="drawBox" name="drawBox">
+            </td>           
           </tr>
           <tr>
             <td>
@@ -131,29 +151,11 @@
               <label for="nineColour">9</label>
               <input type="color" id="nineColour" name="nineColour" value="#000000">
             </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="drawBox">Draw box</label>
-              <input type="checkbox" id="drawBox" name="drawBox">
-            </td>           
             <td>
               <input type='button' value="Perspective/Orthographic" onclick='onViewChange()'> 
             </td>
           </tr>
-          <tr>
-            <td>
-              <label for="cameraDistance">Camera Distance</label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="range" id="cameraDistanceSlider" min="0" max="500" value="50" step="0.1">
-            </td>
-            <td>
-              <input type="number" id="cameraDistanceNumber" min="0" max="500" value="50"  step="0.1">
-            </td>
-          </tr>
+          
         </table>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
       </form>
@@ -161,7 +163,7 @@
   </body>
 
   <script type="text/javascript" src="js/visualization.js"></script>
-  
+
   <script>
   function topNavFun() {
     var x = document.getElementById("myNav")

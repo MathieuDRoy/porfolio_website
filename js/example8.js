@@ -6,6 +6,11 @@ var threeD = new Array();
 var perspective;
 
 function init(v_output) {
+    let gui;
+
+    initGui()
+
+
     scene = new THREE.Scene();    
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -18,7 +23,7 @@ function init(v_output) {
     //controls.autoRotate = true;
     controls.update();
 
-    vDrawBox = (document.getElementById("drawBox").value == "on") ? true : false;
+    vDrawBox = (document.getElementById("drawBox").value != "on") ? true : false;
     threeD = cleanArray(v_output);
     drawBox();
     drawModel();
@@ -268,5 +273,12 @@ function getYZDistance() {
     distance = Math.sqrt(camera.position.y**2 + (camera.position.z)**2);
     return distance;
 }
+
+function initGui() {
+
+    gui = new GUI();
+}
+
+//
 
 window.addEventListener('resize', onWindowResize);
