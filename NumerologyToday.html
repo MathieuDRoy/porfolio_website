@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="icon" type="image/x-icon" href="/unnamed.png">
+    <meta charset="utf-8">
+    <title>Numerology Today</title>
+    <link rel="stylesheet" type="text/css" href="sitestyle.css">
+  </head>
+  <body>
+
+    <script> 
+        let todayObj = new Date()
+        let day = todayObj.getDay()
+        let month = todayObj.getMonth()
+        let year = todayObj.getYear()
+
+        let daySum, dayFin, monthSum, tmpSum, tmpFin, yearSum, yearFin, yearDone, tmpTotal, totalDone;
+
+        if (day != 11 || day != 22) {
+            daySum = parseInt(day.toString()[0]) + parseInt(day.toString()[1]);
+            if (daySum > 9 && daySum != 11) {
+                dayFin = parseInt(daySum.toString()[0]) + parseInt(daySum.toString()[1]);
+            } else {
+                dayFin = daySum;
+            }
+        } else {
+            dayFin = day;
+        }
+
+        if (month != 11) {
+            monthSum = parseInt(month.toString()[0]) + parseInt(month.toString()[1]);
+        }
+
+        tmpSum = dayFin + monthSum;
+        if (tmpSum > 9 && tmpSum != 11 && tmpSum != 22 && tmpSum != 33) {
+            tmpFin = parseInt(tmpSum.toString()[0]) + parseInt(tmpSum.toString()[1]);
+        }
+
+        yearSum = parseInt(year.toString()[0]) + parseInt(year.toString()[1]) + parseInt(year.toString()[2]) + parseInt(year.toString()[3]);
+        if (yearSum != 11 || yearSum != 22 || yearSum != 33) {
+            yearFin = parseInt(yearSum.toString()[0]) + parseInt(yearSum.toString()[1]);
+            if (yearFin > 9 && yearFin != 11 && yearFin != 22) {
+                yearDone = parseInt(yearFin.toString()[0]) + parseInt(yearFin.toString()[1]);
+            }
+        }
+
+        tmpTotal = tmpFin + yearDone;
+        if (tmpTotal > 9 && tmpTotal != 11 && tmpTotal != 22 && tmpTotal != 33) {
+            totalDone = parseInt(tmpTotal.toString()[0]) + parseInt(tmpTotal.toString()[1]);
+        } else {
+            totalDone = tmpTotal
+        }
+
+        console.log("End value:", totalDone.toString());
+    </script> 
+    
+    
+  </body>
+</html>
