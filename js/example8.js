@@ -15,16 +15,14 @@ function init(v_output) {
     camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
     perspective = 1;
     controls = new THREE.OrbitControls( camera, renderer.domElement );
-    //controls.autoRotate = true;
-    controls.update();
 
     vDrawBox = (document.getElementById("drawBox").value != "on") ? true : false;
     threeD = cleanArray(v_output);
     drawBox();
     drawModel();
 
-    camera.position.x = 0;
-    camera.position.y = 0;
+    camera.position.x = 1;
+    camera.position.y = 1;
     document.getElementById("cameraDistanceSlider").value = threeD[8];
     document.getElementById("cameraDistanceNumber").value = threeD[8];
     camera.position.z = threeD[8];
@@ -35,12 +33,12 @@ function init(v_output) {
     controls.enablePan = false;
     controls.enableDamping = true;
     controls.update();
+    // document.getElementById("azimuth").value = (controls.getAzimuthalAngle() * (180/Math.PI));
+    // document.getElementById("polar").value = (controls.getPolarAngle() * (180/Math.PI));
     animate();
 }
 
 function animate() {
-    //controls.update();
-    //console.log(camera.position.x)
     renderer.render(scene, camera);
     window.requestAnimationFrame(animate);
 }
@@ -69,52 +67,57 @@ function cleanArray (v_output) {
 function drawBox() {
     if (vDrawBox == true) {
         const boxMaterial = new THREE.MeshBasicMaterial( { color: "#000000"} );
-        var modelDimentians = new Array();
+        var modelDimension = new Array();
 
         for (let allCoordinates = 0; allCoordinates < 9; allCoordinates++) {
-            modelDimentians[allCoordinates] = threeD[allCoordinates]/2;
+            modelDimension[allCoordinates] = threeD[allCoordinates]/2;
         }
 
         const points1 = [];
-        points1.push( new THREE.Vector3( -modelDimentians[0],  modelDimentians[4], -modelDimentians[8] ) );
-        points1.push( new THREE.Vector3( -modelDimentians[0],  modelDimentians[4],  modelDimentians[8] ) );
-        points1.push( new THREE.Vector3(  modelDimentians[0],  modelDimentians[4],  modelDimentians[8] ) );
-        points1.push( new THREE.Vector3(  modelDimentians[0], -modelDimentians[4],  modelDimentians[8] ) );
+        points1.push( new THREE.Vector3( -modelDimension[0],  modelDimension[4], -modelDimension[8] ) );
+        points1.push( new THREE.Vector3( -modelDimension[0],  modelDimension[4],  modelDimension[8] ) );
+        points1.push( new THREE.Vector3(  modelDimension[0],  modelDimension[4],  modelDimension[8] ) );
+        points1.push( new THREE.Vector3(  modelDimension[0], -modelDimension[4],  modelDimension[8] ) );
         const geometryForBox1 = new THREE.BufferGeometry().setFromPoints( points1 );
         const line1 = new THREE.Line( geometryForBox1, boxMaterial );
         scene.add( line1 );
 
         const points2 = [];
-        points2.push( new THREE.Vector3( -modelDimentians[0], -modelDimentians[4], -modelDimentians[8] ) );
-        points2.push( new THREE.Vector3( -modelDimentians[0],  modelDimentians[4], -modelDimentians[8] ) );
-        points2.push( new THREE.Vector3(  modelDimentians[0],  modelDimentians[4], -modelDimentians[8] ) );
-        points2.push( new THREE.Vector3(  modelDimentians[0],  modelDimentians[4],  modelDimentians[8] ) );
+        points2.push( new THREE.Vector3( -modelDimension[0], -modelDimension[4], -modelDimension[8] ) );
+        points2.push( new THREE.Vector3( -modelDimension[0],  modelDimension[4], -modelDimension[8] ) );
+        points2.push( new THREE.Vector3(  modelDimension[0],  modelDimension[4], -modelDimension[8] ) );
+        points2.push( new THREE.Vector3(  modelDimension[0],  modelDimension[4],  modelDimension[8] ) );
         const geometryForBox2 = new THREE.BufferGeometry().setFromPoints( points2 );
         const line2 = new THREE.Line( geometryForBox2, boxMaterial );
         scene.add( line2 );
 
         const points3 = [];
-        points3.push( new THREE.Vector3(  modelDimentians[0],  modelDimentians[4], -modelDimentians[8] ) );
-        points3.push( new THREE.Vector3(  modelDimentians[0], -modelDimentians[4], -modelDimentians[8] ) );
-        points3.push( new THREE.Vector3( -modelDimentians[0], -modelDimentians[4], -modelDimentians[8] ) );
-        points3.push( new THREE.Vector3( -modelDimentians[0], -modelDimentians[4],  modelDimentians[8] ) );
+        points3.push( new THREE.Vector3(  modelDimension[0],  modelDimension[4], -modelDimension[8] ) );
+        points3.push( new THREE.Vector3(  modelDimension[0], -modelDimension[4], -modelDimension[8] ) );
+        points3.push( new THREE.Vector3( -modelDimension[0], -modelDimension[4], -modelDimension[8] ) );
+        points3.push( new THREE.Vector3( -modelDimension[0], -modelDimension[4],  modelDimension[8] ) );
         const geometryForBox3 = new THREE.BufferGeometry().setFromPoints( points3 );
         const line3 = new THREE.Line( geometryForBox3, boxMaterial );
         scene.add( line3 );
 
         const points4 = [];
-        points4.push( new THREE.Vector3( -modelDimentians[0],  modelDimentians[4],  modelDimentians[8] ) );
-        points4.push( new THREE.Vector3( -modelDimentians[0], -modelDimentians[4],  modelDimentians[8] ) );
-        points4.push( new THREE.Vector3(  modelDimentians[0], -modelDimentians[4],  modelDimentians[8] ) );
-        points4.push( new THREE.Vector3(  modelDimentians[0], -modelDimentians[4], -modelDimentians[8] ) );
+        points4.push( new THREE.Vector3( -modelDimension[0],  modelDimension[4],  modelDimension[8] ) );
+        points4.push( new THREE.Vector3( -modelDimension[0], -modelDimension[4],  modelDimension[8] ) );
+        points4.push( new THREE.Vector3(  modelDimension[0], -modelDimension[4],  modelDimension[8] ) );
+        points4.push( new THREE.Vector3(  modelDimension[0], -modelDimension[4], -modelDimension[8] ) );
         const geometryForBox4 = new THREE.BufferGeometry().setFromPoints( points4 );
         const line4 = new THREE.Line( geometryForBox4, boxMaterial );
         scene.add( line4 );
     }
     controls.update();
+    // document.getElementById("azimuth").value = (controls.getAzimuthalAngle() * (180/Math.PI));
+    // document.getElementById("polar").value = (controls.getPolarAngle() * (180/Math.PI));
 }
 
 function drawModel() {
+
+    //console.log(controls);
+
     camera.position.z = document.getElementById("cameraDistanceSlider").value;
     while(scene.children.length > 0){ 
         for (let allChildren = 0; allChildren< scene.children.length; allChildren++ ){
@@ -169,12 +172,6 @@ function drawModel() {
         particles[allParticles].position.set(threeD[allParticles+2]-(threeD[0]/2), threeD[allParticles+3]-(threeD[4]/2), threeD[allParticles+4]-(threeD[8]/2));
         
     }
-
-    setAzimuth();
-    setPolar();
-    setTwist();
-
-    controls.update();
     drawBox();
 }
 
@@ -213,8 +210,6 @@ function onViewChange() {
         controls.target = new THREE.Vector3( cam.tX, cam.tY, cam.tZ );
         perspective = 1;
     }
-    
-
 };
 
 function setAzimuth() {
@@ -264,13 +259,13 @@ function setTwist() {
 
 function getXYDistance() {
     var distance;
-    distance = Math.sqrt(camera.position.x**2 + camera.position.y**2);
+    distance = Math.sqrt((camera.position.x)**2 + (camera.position.y)**2);
     return distance;
 }
 
 function getYZDistance() {
     var distance;
-    distance = Math.sqrt(camera.position.y**2 + (camera.position.z)**2);
+    distance = Math.sqrt((camera.position.y)**2 + (camera.position.z)**2);
     return distance;
 }
 
