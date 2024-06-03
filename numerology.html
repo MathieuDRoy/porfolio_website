@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<head>
-    <style>
-        h1 {
-            text-align: center;
-            color: #036040;
-        }
-        h3 {
-            text-align: center;
-        }
-    </style>
-</head>
-<html>
-    <body>
-        <h1 id="todayTxt"></h1>
-        <h3 id="todayNum"></h3>
+<h1 id="todayTxt" style="color:#036040;text-align:center;font-family: 'Aboreto';font-size: 34px;font-weight: bold;"></h1>
+        <h3 id="todayNum" style="color:#036040;text-align:center;font-family: 'Aboreto';font-size: 34px;font-weight: bold;"></h3>
 
         <script>
             let todayDate = new Date();
@@ -34,7 +20,14 @@
             if (partialNum != 0){
                 document.getElementById("todayNum").innerHTML = "Today is a " + dayNum + " day. Partial " + partialNum;
             } else {
+                
+
                 document.getElementById("todayNum").innerHTML = "Today is a " + dayNum + " day";
+
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('dayid', dayNum);
+                urlParams.set('runs', 2);
+                window.location.search = urlParams;
             }
 
             function downAddDay(dayObj){
@@ -131,6 +124,3 @@
                 return dayMonthYearNum
             }
         </script>
-
-    </body>
-</html>
